@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ajax投票</title>
+	<script>
+		function getVote(int){
+			if(window.XMLHttpRequest){
+				//IE7+...
+				xmlhttp=new XMLHttpRequest();
+			}else{
+				//IE6-
+				xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			xmlhttp.onreadystatechange=function(){
+				if(xmlhttp.readyState==4 && xmlhttp.status==200){
+					document.getElementById("poll").innerHTML=xmlhttp.responseText;
+				}
+			}
+			xmlhttp.open("GET","poll_vote.php?vote="+int,true);
+		
+			xmlhttp.send();
+		}
+	</script>
+</head>
+<body>
+	<div id="poll">
+		<h3>你喜欢PHP和ajax吗？</h3>
+		<form>
+			是：
+			<input type="radio" name="vote" value="0" onclick="getVote(this.value)">
+			<br>
+			否：
+			<input type="radio" name="vote" value="1" onclick="getVote(this.value)">
+		</form>
+	</div>
+	<!--
+	 getVote() 函数会执行以下步骤： 
+	创建 XMLHttpRequest 对象
+	创建在服务器响应就绪时执行的函数
+	向服务器上的文件发送请求
+	请注意添加到 URL 末端的参数（q）（包含下拉列表的内容）
+	-->
+</body>
+</html>
